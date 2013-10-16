@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+
+<html lang="en" ng-app="myApp">
+	<head>
+		<title>Interview Task</title>
+		<link rel='stylesheet' type='text/css' href='css/bootstrap.css' />
+	    <link rel='stylesheet' type='text/css' href='css/bootstrap-responsive.css' />
+		<link rel='stylesheet' type='text/css' href='css/app.css' />
+	    <script type="text/javascript" src="lib/jquery-1.9.1.js"></script>
+	    <script type="text/javascript" src="lib/bootstrap.min.js"></script>
+	    <script type="text/javascript" src="lib/angular.js"></script>
+		<script type="text/javascript" src="js/custom.js"></script>
+	</head>	
+
+	<body ng-controller="ContactListCtrl">
+		<div>
+			<div class="search-bar">
+				<span class="find">FIND: </span><input id = "find" ng-model="searchText">
+			</div>
+			<div class="page-size" style="padding-top:10px; padding-bottom:10px; float: right;">
+				Number of Rows per Page : <a href="javascript:void(0)" style="padding-left:10px" ng-click="setPageSize(pageSize)" ng-repeat="pageSize in [10,20,50,100,200,500,1000]"> {{pageSize}}</a>
+			</div>
+			<pagination data="tableData = ( data | orderBy:orderHeader:orderDirection | filter:searchText )" current-page="dataCurrentPage" page-size="dataPageSize">
+				<table>
+					<tr id="pageTitle">
+						<td	ng-class="{'sortBy' : head == orderHeader, 'asc':head == orderHeader && orderDirection == true,	'desc':head == orderHeader && orderDirection == false}" ng-click="orderTableBy(head)" ng-repeat="head in headers">
+						{{head}}
+						</td>
+					</tr>
+					<tr ng-repeat="d in tableData | pageFilter:dataPageSize:dataCurrentPage">
+						<td ng-repeat="head in headers">
+						{{d[head]}}
+						</td>
+					</tr>
+				</table>
+			</pagination>
+		</div>
+	</body>
+</html>
